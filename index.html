@@ -100,6 +100,9 @@ h2::after{content:"";position:absolute;left:0;bottom:0;width:48px;height:4px;bor
 .zoom{border-radius:12px!important}
 footer{background:#FFFDF9}
 .wrap>h2{align-self:flex-start}
+#toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:#4C1D95;color:#fff;padding:12px 20px;border-radius:999px;font-weight:700;font-size:15px;box-shadow:0 8px 24px rgba(76,29,149,.3);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:200}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (prefers-reduced-motion:reduce){#toast{transition:none}}
 </style>
 </head>
 <body>
@@ -124,7 +127,7 @@ footer{background:#FFFDF9}
 <p style="font-size:1.1rem;color:var(--muted)">Computer Science Student</p>
 <p><a class="uni" href="https://www.thws.de/en/">Technical University of Applied Sciences Würzburg-Schweinfurt</a></p>
 <div class="social">
-<a href="mailto:sinembykl01@gmail.com" aria-label="Email"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
+<a href="mailto:sinembykl01@gmail.com" class="copy-mail" aria-label="Copy email address" title="Copy email address"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
 <a href="https://github.com/sinembykl" aria-label="GitHub"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 7l-5 5 5 5"/><path d="M16 7l5 5-5 5"/><path d="M14 4l-4 16"/></svg></a>
 <a href="https://www.linkedin.com/in/sinem-biyikli/" aria-label="LinkedIn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7"/><path d="M8 7v.01"/><path d="M12 17v-4a2.5 2.5 0 0 1 5 0v4"/><path d="M12 10v7"/></svg></a>
 </div>
@@ -218,7 +221,7 @@ footer{background:#FFFDF9}
 <h2>Contact</h2>
 <div class="main" style="display:flex;flex-direction:column;gap:14px">
 <p>Looking for a full-time internship in IT security or software development from March 2027. Open to relocation.</p>
-<p><a href="mailto:sinembykl01@gmail.com"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>sinembykl01@gmail.com</a></p>
+<p><a href="mailto:sinembykl01@gmail.com" class="copy-mail" title="Copy email address"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>sinembykl01@gmail.com</a></p>
 <p><span class="loc"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Würzburg, Germany</span></p>
 </div>
 </div>
@@ -233,6 +236,15 @@ function open(img){last=img;big.src=img.src;big.alt=img.alt;lb.classList.toggle(
 function close(){lb.classList.remove('open');document.body.style.overflow='';if(last)last.focus();}
 document.querySelectorAll('.zoom').forEach(function(img){img.addEventListener('click',function(){open(img)});img.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();open(img)}})});
 lb.addEventListener('click',close);document.addEventListener('keydown',function(e){if(e.key==='Escape'&&lb.classList.contains('open'))close()});})();
+</script>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+(function(){var mail='sinembykl01@gmail.com',toast=document.getElementById('toast'),timer;
+function show(msg){toast.textContent=msg;toast.classList.add('show');clearTimeout(timer);timer=setTimeout(function(){toast.classList.remove('show')},2600);}
+document.querySelectorAll('.copy-mail').forEach(function(a){a.addEventListener('click',function(e){
+ if(!navigator.clipboard)return; e.preventDefault();
+ navigator.clipboard.writeText(mail).then(function(){show('Email copied: '+mail)},function(){window.location.href='mailto:'+mail});
+});});})();
 </script>
 </body>
 </html>
